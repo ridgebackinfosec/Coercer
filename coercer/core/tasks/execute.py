@@ -141,9 +141,9 @@ def execute_tasks(
 
                                     exploitpath = generate_exploit_path_from_template(
                                         template=exploitpath,
-                                        listener=options.path_ip
+                                        listener=(getattr(options, "path_ip", None)
                                         or listening_ip
-                                        or options.listener_ip,
+                                        or options.listener_ip),
                                         http_listen_port=(
                                             http_listen_port
                                             if mode == Modes.FUZZ
@@ -152,7 +152,7 @@ def execute_tasks(
                                         smb_listen_port=options.smb_port,
                                     )
 
-                                    if options.path_ip:
+                                    if getattr(options, "path_ip", None):
                                         reporter.print_info(
                                             "      ",
                                             "Using user provided path: %s"
